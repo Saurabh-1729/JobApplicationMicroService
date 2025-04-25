@@ -1,5 +1,6 @@
 package com.saurabhs.jobms.Job;
 
+import com.saurabhs.jobms.Job.dto.JobWithCompanyDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class JobController {
 
     //  IF we hit this URL this method will be called
     @GetMapping("/Jobs")
-    public ResponseEntity<List<Job>> findAll(){
+    public ResponseEntity<List<JobWithCompanyDTO>> findAll(){
         return new ResponseEntity<>(jobService.findAll(), HttpStatus.OK);
     }
 
