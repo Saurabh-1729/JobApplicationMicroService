@@ -31,13 +31,13 @@ public class JobController {
     }
 
     @GetMapping("/Jobs/{id}")
-    public ResponseEntity<Job> getJobById(@PathVariable Long id){
+    public ResponseEntity<JobWithCompanyDTO> getJobById(@PathVariable Long id){
 //        pathvariable assign the variable id to the query value
-        Job job = jobService.getJobById(id);
-        if(job == null) {
+        JobWithCompanyDTO jobWithCompanyDTO = jobService.getJobById(id);
+        if(jobWithCompanyDTO == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(job, HttpStatus.OK);
+        return new ResponseEntity<>(jobWithCompanyDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/Jobs/{id}")

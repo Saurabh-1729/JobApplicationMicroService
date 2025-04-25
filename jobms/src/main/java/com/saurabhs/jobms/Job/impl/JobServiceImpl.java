@@ -6,6 +6,8 @@ import com.saurabhs.jobms.Job.JobRepository;
 import com.saurabhs.jobms.Job.JobService;
 import com.saurabhs.jobms.Job.dto.JobWithCompanyDTO;
 import com.saurabhs.jobms.Job.external.Company;
+import com.saurabhs.jobms.Job.mapper.JobMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,6 +22,10 @@ public class JobServiceImpl implements JobService {
 
     //    Now use DataBase
     JobRepository jobRepository;
+
+    @Autowired
+    RestTemplate restTemplate;
+
     private Long nextId = 1L;
 
 //    Loosely Couple
@@ -32,16 +38,22 @@ public class JobServiceImpl implements JobService {
         List<Job> jobs = jobRepository.findAll();
         List<JobWithCompanyDTO> jobWithCompanyDTOS = new ArrayList<>();
 
-        RestTemplate restTemplate = new RestTemplate();
+//        RestTemplate restTemplate = new RestTemplate();
 
         for (Job job : jobs) {
-            JobWithCompanyDTO jobWithCompanyDTO = new JobWithCompanyDTO();
-            jobWithCompanyDTO.setJob(job);
-            Company company = restTemplate.getForObject("http://localhost:8082/companies/" + job.getCompanyId(), Company.class);
+            Company company = restTemplate.getForObject("http://company-service:8082/companies/" + job.getCompanyId(), Company.class);
+            JobWithCompanyDTO jobWithCompanyDTO = JobMapper.mapToJobWithCompanyDTO(job, company);
             jobWithCompanyDTO.setCompany(company);
             jobWithCompanyDTOS.add(jobWithCompanyDTO);
         }
         return jobWithCompanyDTOS;
+    }
+
+    private JobWithCompanyDTO convertToDTO(Job job) {
+        Company company = restTemplate.getForObject("http://company-service:8082/companies/" + job.getCompanyId(), Company.class);
+        JobWithCompanyDTO jobWithCompanyDTO = JobMapper.mapToJobWithCompanyDTO(job, company);
+        jobWithCompanyDTO.setCompany(company);
+        return jobWithCompanyDTO;
     }
 
     @Override
@@ -51,8 +63,10 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public Job getJobById(Long id) {
-        return jobRepository.findById(id).orElse(null);
+    public JobWithCompanyDTO getJobById(Long id) {
+        Job job = jobRepository.findById(id).orElse(null);
+        assert job != null;
+        return convertToDTO(job);
     }
 
     @Override
@@ -84,3 +98,7 @@ public class JobServiceImpl implements JobService {
         return false;
     }
 }
+
+
+// Unknown Host exception
+//Rest template is not load balanced
