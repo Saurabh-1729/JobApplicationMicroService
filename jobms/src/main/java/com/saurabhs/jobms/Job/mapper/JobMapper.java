@@ -1,19 +1,23 @@
 package com.saurabhs.jobms.Job.mapper;
 
 import com.saurabhs.jobms.Job.Job;
-import com.saurabhs.jobms.Job.dto.JobWithCompanyDTO;
+import com.saurabhs.jobms.Job.dto.JobDTO;
 import com.saurabhs.jobms.Job.external.Company;
+import com.saurabhs.jobms.Job.external.Reviews;
+
+import java.util.List;
 
 public class JobMapper {
-    public static JobWithCompanyDTO mapToJobWithCompanyDTO(Job job, Company company) {
-        JobWithCompanyDTO jobWithCompanyDTO = new JobWithCompanyDTO();
-        jobWithCompanyDTO.setId(job.getId());
-        jobWithCompanyDTO.setTitle(job.getTitle());
-        jobWithCompanyDTO.setDescription(job.getDescription());
-        jobWithCompanyDTO.setMinSalary(job.getMinSalary());
-        jobWithCompanyDTO.setMaxSalary(job.getMaxSalary());
-        jobWithCompanyDTO.setLocation(job.getLocation());
-        jobWithCompanyDTO.setCompany(company);
-        return jobWithCompanyDTO;
+    public static JobDTO mapToJobWithCompanyDTO(Job job, Company company, List<Reviews> reviews) {
+        JobDTO jobDTO = new JobDTO();
+        jobDTO.setId(job.getId());
+        jobDTO.setTitle(job.getTitle());
+        jobDTO.setDescription(job.getDescription());
+        jobDTO.setMinSalary(job.getMinSalary());
+        jobDTO.setMaxSalary(job.getMaxSalary());
+        jobDTO.setLocation(job.getLocation());
+        jobDTO.setCompany(company);
+        jobDTO.setReviews(reviews);
+        return jobDTO;
     }
 }

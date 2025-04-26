@@ -1,15 +1,15 @@
 package com.saurabhs.jobms.Job;
 
-import com.saurabhs.jobms.Job.dto.JobWithCompanyDTO;
+import com.saurabhs.jobms.Job.dto.JobDTO;
 
 import java.util.List;
 
 // As interface for loose coupling
 // Define methods in interface and implement them in class
 public interface JobService {
-    List<JobWithCompanyDTO> findAll();
+    List<JobDTO> findAll();
     void createJob(Job job);
-    JobWithCompanyDTO getJobById(Long id);
+    JobDTO getJobById(Long id);
 
     boolean deleteJobById(Long id);
 

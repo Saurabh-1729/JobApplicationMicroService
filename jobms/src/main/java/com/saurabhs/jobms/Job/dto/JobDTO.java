@@ -1,9 +1,11 @@
 package com.saurabhs.jobms.Job.dto;
 
-import com.saurabhs.jobms.Job.Job;
 import com.saurabhs.jobms.Job.external.Company;
+import com.saurabhs.jobms.Job.external.Reviews;
 
-public class JobWithCompanyDTO {
+import java.util.List;
+
+public class JobDTO {
 //    Instead of whole JSON we can put the fields that we want and this will make the response more structured
 private Long id;
     private String title;
@@ -12,7 +14,15 @@ private Long id;
     private String maxSalary;
     private String location;
     private Company company;
+    private List<Reviews> reviews;
 
+    public void setReviews(List<Reviews> reviews) {
+        this.reviews = reviews;
+    }
+
+    public List<Reviews> getReviews() {
+        return reviews;
+    }
 //    public Job getJob() {
 //        return job;
 //    }

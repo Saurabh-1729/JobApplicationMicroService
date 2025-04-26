@@ -1,6 +1,6 @@
 package com.saurabhs.jobms.Job;
 
-import com.saurabhs.jobms.Job.dto.JobWithCompanyDTO;
+import com.saurabhs.jobms.Job.dto.JobDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class JobController {
 
     //  IF we hit this URL this method will be called
     @GetMapping("/Jobs")
-    public ResponseEntity<List<JobWithCompanyDTO>> findAll(){
+    public ResponseEntity<List<JobDTO>> findAll(){
         return new ResponseEntity<>(jobService.findAll(), HttpStatus.OK);
     }
 
@@ -31,13 +31,13 @@ public class JobController {
     }
 
     @GetMapping("/Jobs/{id}")
-    public ResponseEntity<JobWithCompanyDTO> getJobById(@PathVariable Long id){
-//        pathvariable assign the variable id to the query value
-        JobWithCompanyDTO jobWithCompanyDTO = jobService.getJobById(id);
-        if(jobWithCompanyDTO == null) {
+    public ResponseEntity<JobDTO> getJobById(@PathVariable Long id){
+//        Pathvariable assign the variable id to the query value
+        JobDTO jobDTO = jobService.getJobById(id);
+        if(jobDTO == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(jobWithCompanyDTO, HttpStatus.OK);
+        return new ResponseEntity<>(jobDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/Jobs/{id}")
