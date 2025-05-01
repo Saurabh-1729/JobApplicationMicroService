@@ -5,17 +5,6 @@ public class Company {
     private String name;
     private String description;
 
-
-//    @JsonIgnore // Removes recursive call backs
-////    This is for Database to know that there is one to many mapping
-//    @OneToMany(mappedBy = "company") // this mapped by tells there is a mapping between Job and Company by a field named
-////    company in the Job Entity
-//    List<Job> jobs;
-//
-    ////    @JsonIgnore
-//    @OneToMany(mappedBy = "company")
-//    List<Reviews> reviews;
-
     public Company() {
     }
 
